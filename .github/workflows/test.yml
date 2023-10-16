@@ -99,6 +99,9 @@ jobs:
       DOCKER_BUILDX_BUILDER: "builder"
 
     steps:
+      - name: Disk free
+        run: df -h
+
       - name: Checkout
         uses: actions/checkout@v3.3.0
 
@@ -108,10 +111,21 @@ jobs:
       - name: Install Docker Buildx
         run: docker buildx install
 
+      - name: Disk free
+        run: df -h
+
       - name: Setup Golang with Cache
         uses: magnetikonline/action-golang-cache@v4
         with:
           go-version: "1.20"
+
+      - name: Disk free
+        run: df -h
+
+      - name: Setup upterm session
+        uses: lhotari/action-upterm@v1
+        with:
+          limit-access-to-actor: true
 
       - name: Setup dependencies
         shell: bash
